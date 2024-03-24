@@ -34,6 +34,7 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
+          npm init
           npm install -g html-validate
           npm install -g eslint eslint-config-standard
           npm init @eslint/config
