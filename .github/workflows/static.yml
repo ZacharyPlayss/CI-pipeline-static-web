@@ -43,7 +43,7 @@ jobs:
               echo "::error::HTML validation failed"
               exit 1
             fi
-      # valiate css
+      # Validate CSS
       - name: Validate CSS
         run: |
           for file in $(find . -type f -name "*.css"); do
@@ -63,6 +63,13 @@ jobs:
         with:
           name: html-validation-report
           path: html-validation-report.txt
+      # Create CSS validation report artifact
+      - name: Create CSS validation report artifact
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: css-validation-report
+          path: '**/*.css'
   deploy:
     environment:
       name: github-pages
