@@ -44,7 +44,7 @@ jobs:
         
       # Validate CSS files
       - name: Validate CSS with Stylelint
-        run: stylelint "**/*.css"
+        run: stylelint "**/*.css" --config '{ "extends": "stylelint-config-standard" }'
 
       # Validate JavaScript files
       - name: Validate JavaScript
