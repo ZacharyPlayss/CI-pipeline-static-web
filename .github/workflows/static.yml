@@ -34,10 +34,8 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-          npm init
           npm install -g html-validate
-          npm install -g eslint eslint-config-standard
-          npm init @eslint/config
+          npm install -g jshint
       # Validate HTML
       - name: Validate HTML
         run: |
@@ -60,9 +58,11 @@ jobs:
             fi
           done
 
-        # Validate JavaScript
+       # Validate JavaScript
       - name: Validate JavaScript
-        run: eslint "**/*.js"   
+        run: |
+          jshint "**/*.js"
+          
       # Create artifacts containg overview files of issues.
       - name: Create artifacts
         if: always()  # Ensure the step always runs
@@ -77,6 +77,13 @@ jobs:
         with:
           name: css-validation-report
           path: '**/*.css'
+       # Create JavaScript validation report artifact
+      - name: Create JavaScript validation report artifact
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: js-validation-report
+          path: '**/*.js' 
   deploy:
     environment:
       name: github-pages
