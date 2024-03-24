@@ -2,6 +2,8 @@
 The yml config file can be found in .github/workflows/static.yml. 
 (Disclaimer this config file will only work on GITHUB since it makes use of actions.)
 
+The pipeline will validate HTML and CSS files. Creates error logs in the artifacts tab of the pipeline run and publish to github pages when everything is valid.
+
 ## How do I use this pipeline myself ?
 ### Existing repository?
 - Go to the root of your repository and paste in the static.yml file inside of ".github/workflows/" folder.
