@@ -45,6 +45,10 @@ jobs:
         with:
           name: html-validation-report
           path: html-validation-report.txt
+       # Fail if html not validated
+      - name: Fail job if.
+        if: failure()
+        run: exit 1
   deploy:
     environment:
       name: github-pages
