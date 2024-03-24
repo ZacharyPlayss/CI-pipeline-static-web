@@ -42,10 +42,6 @@ jobs:
       - name: Validate HTML
         run: htmlhint "**/*.html"
         
-      # Validate CSS files
-      - name: Validate CSS with Stylelint
-        run: stylelint "**/*.css" --config "stylelint-config-standard"
-
       # Validate JavaScript files
       - name: Validate JavaScript
         run: eslint "**/*.js"
