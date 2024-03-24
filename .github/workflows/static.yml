@@ -43,6 +43,19 @@ jobs:
               echo "::error::HTML validation failed"
               exit 1
             fi
+      # valiate css
+      - name: Validate CSS
+        run: |
+          for file in $(find . -type f -name "*.css"); do
+            response=$(curl -s -F "file=@$file" https://jigsaw.w3.org/css-validator/validator)
+            if echo "$response" | grep -q "Congratulations! No Error Found."; then
+              echo "CSS file $file is valid."
+            else
+              echo "::error::CSS file $file is invalid:"
+              echo "$response"
+              exit 1
+            fi
+          done
       # Create artifacts containg overview files of issues.
       - name: Create artifacts
         if: always()  # Ensure the step always runs
