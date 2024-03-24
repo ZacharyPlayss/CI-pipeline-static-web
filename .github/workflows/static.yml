@@ -44,7 +44,7 @@ jobs:
 
       # Validate CSS files
       - name: Validate CSS with Prettier
-        run: prettier --check "**/*.css"
+        run: prettier --list-different "**/*.css"
 
       # Validate JavaScript files
       - name: Validate JavaScript
