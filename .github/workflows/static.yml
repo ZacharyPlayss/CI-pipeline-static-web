@@ -34,6 +34,8 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
+          touch css-validation-report.txt
+          touch html-validation-report.txt
           npm install -g html-validate
           npm install -g jshint
           sudo apt-get update && sudo apt-get install -y pandoc
@@ -48,7 +50,6 @@ jobs:
       # Validate CSS
       - name: Validate CSS
         run: |
-          touch css-validation-report.txt
           for file in $(find . -type f -name "*.css"); do
             response=$(curl -s -F "file=@$file" https://jigsaw.w3.org/css-validator/validator)
             if echo "$response" | grep -q "Congratulations! No Error Found."; then
@@ -61,6 +62,7 @@ jobs:
           done
     # Convert validation reports to HTML format
       - name: Convert to HTML
+        if: always()
         run: |
           pandoc -f markdown -t html html-validation-report.txt -o html-validation-report.html
           pandoc -f markdown -t html css-validation-report.txt -o css-validation-report.html
@@ -73,6 +75,7 @@ jobs:
           path: |
             html-validation-report.html
             css-validation-report.html
+          zip: false
   deploy:
     environment:
       name: github-pages
