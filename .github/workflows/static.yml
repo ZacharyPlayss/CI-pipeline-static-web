@@ -35,6 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install -g html-validate
+          npm install -g eslint eslint-config-standard
       # Validate HTML
       - name: Validate HTML
         run: |
