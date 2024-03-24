@@ -38,8 +38,13 @@ jobs:
           npm install -g html-validate
       # Validate HTML
       - name: Validate HTML
-        run: html-validate "**/*.html"
-        
+        run: html-validate "**/*.html" > html-validation-report.txt
+      # Create artifacts containg overview files of issues.
+      - name: Create artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: html-validation-report
+          path: html-validation-report.txt
   deploy:
     environment:
       name: github-pages
