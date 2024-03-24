@@ -56,6 +56,10 @@ jobs:
               exit 1
             fi
           done
+
+        # Validate JavaScript
+      - name: Validate JavaScript
+        run: eslint "**/*.js"   
       # Create artifacts containg overview files of issues.
       - name: Create artifacts
         if: always()  # Ensure the step always runs
