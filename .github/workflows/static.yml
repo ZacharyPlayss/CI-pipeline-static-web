@@ -37,7 +37,12 @@ jobs:
           npm install -g html-validate
       # Validate HTML
       - name: Validate HTML
-        run: html-validate "**/*.html" > html-validation-report.txt || true
+        run: |
+            html-validate "**/*.html" > html-validation-report.txt
+            if [ $? -ne 0 ]; then
+              echo "::error::HTML validation failed"
+              exit 1
+            fi
       # Create artifacts containg overview files of issues.
       - name: Create artifacts
         if: always()  # Ensure the step always runs
@@ -45,10 +50,6 @@ jobs:
         with:
           name: html-validation-report
           path: html-validation-report.txt
-       # Fail if html not validated
-      - name: Fail job if.
-        if: failure()
-        run: exit 1
   deploy:
     environment:
       name: github-pages
