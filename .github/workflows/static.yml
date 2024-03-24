@@ -51,14 +51,14 @@ jobs:
       - name: Validate CSS
         run: |
           for file in $(find . -type f -name "*.css"); do
-            response=$(curl -s -F "file=@$file" https://jigsaw.w3.org/css-validator/validator)
-            if echo "$response" | grep -q "Congratulations! No Error Found."; then
-              echo "CSS file $file is valid."
-            else
-              echo "CSS file $file is invalid:"
-              echo "$response" >> css-validation-report.txt
-              echo "-----------------------" >> css-validation-report.txt
-            fi
+              response=$(curl -s -F "file=@$file" https://jigsaw.w3.org/css-validator/validator)
+              if echo "$response" | grep -q "errors"; then
+                  echo "CSS file $file has validation errors:"
+                  echo "$response" >> css-validation-report.txt
+                  echo "-----------------------" >> css-validation-report.txt
+              else
+                  echo "CSS file $file is valid."
+              fi
           done
     # Convert validation reports to HTML format
       - name: Convert to HTML
