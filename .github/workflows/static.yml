@@ -52,6 +52,8 @@ jobs:
         run: |
           for file in $(find . -type f -name "*.css"); do
               response=$(curl -s -F "file=@$file" https://jigsaw.w3.org/css-validator/validator)
+              echo "Response for $file:"
+              echo "$response"
               if echo "$response" | grep -q "errors"; then
                   echo "CSS file $file has validation errors:"
                   echo "$response" >> css-validation-report.txt
