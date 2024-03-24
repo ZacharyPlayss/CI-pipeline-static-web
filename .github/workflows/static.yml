@@ -48,6 +48,7 @@ jobs:
       # Validate CSS
       - name: Validate CSS
         run: |
+          touch css-validation-report.txt
           for file in $(find . -type f -name "*.css"); do
             response=$(curl -s -F "file=@$file" https://jigsaw.w3.org/css-validator/validator)
             if echo "$response" | grep -q "Congratulations! No Error Found."; then
