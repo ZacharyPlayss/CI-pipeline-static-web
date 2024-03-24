@@ -61,7 +61,7 @@ jobs:
        # Validate JavaScript
       - name: Validate JavaScript
         run: |
-          jshint "**/*.js"
+         find . -type f -name "*.js" -print0 | xargs -0 -n1 jshint
           
       # Create artifacts containg overview files of issues.
       - name: Create artifacts
