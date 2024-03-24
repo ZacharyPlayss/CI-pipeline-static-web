@@ -75,7 +75,6 @@ jobs:
           path: |
             html-validation-report.html
             css-validation-report.html
-          zip: false
   deploy:
     environment:
       name: github-pages
