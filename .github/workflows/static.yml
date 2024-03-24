@@ -36,6 +36,7 @@ jobs:
         run: |
           npm install -g html-validate
           npm install -g jshint
+          sudo apt-get update && sudo apt-get install -y pandoc
       # Validate HTML
       - name: Validate HTML
         run: |
@@ -57,16 +58,20 @@ jobs:
               echo "-----------------------" >> css-validation-report.txt
             fi
           done
-
-      # Create artifacts containing files of issues
+    # Convert validation reports to HTML format
+      - name: Convert to HTML
+        run: |
+          pandoc -f markdown -t html html-validation-report.txt -o html-validation-report.html
+          pandoc -f markdown -t html css-validation-report.txt -o css-validation-report.html
+     # Create artifacts containing files of issues
       - name: Create artifacts
         if: always()  # Ensure the step always runs
         uses: actions/upload-artifact@v2
         with:
           name: validation-reports
           path: |
-            html-validation-report.txt
-            css-validation-report.txt
+            html-validation-report.html
+            css-validation-report.html
   deploy:
     environment:
       name: github-pages
