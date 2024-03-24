@@ -1,6 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
-
+name: Deploy and validate static web-pages.
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -45,6 +44,7 @@ jobs:
         with:
           name: html-validation-report
           path: html-validation-report.txt
+          if-no-files-found: error
   deploy:
     environment:
       name: github-pages
