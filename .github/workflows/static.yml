@@ -36,6 +36,7 @@ jobs:
         run: |
           npm install -g html-validate
           npm install -g eslint eslint-config-standard
+          npm init @eslint/config
       # Validate HTML
       - name: Validate HTML
         run: |
