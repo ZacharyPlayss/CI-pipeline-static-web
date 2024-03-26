@@ -37,7 +37,7 @@ jobs:
           touch css-validation-report.txt
           touch html-validation-report.txt
           npm install -g html-validate
-          npm install -g jshint
+          npm install -g stylelint stylelint-config-
           sudo apt-get update && sudo apt-get install -y pandoc
       # Validate HTML
       - name: Validate HTML
@@ -50,16 +50,8 @@ jobs:
       # Validate CSS
       - name: Validate CSS
         run: |
-          for file in $(find . -type f -name "*.css"); do
-              response=$(curl -s -F "file=@$file" https://jigsaw.w3.org/css-validator/validator)
-              if echo "$response" | grep -q "errors"; then
-                  echo "CSS file $file has validation errors:"
-                  echo "$response" >> css-validation-report.txt
-                  echo "-----------------------" >> css-validation-report.txt
-              else
-                  echo "CSS file $file is valid."
-              fi
-          done
+          echo '{ "extends": "stylelint-config-recommended" }' > .stylelintrc.json
+          stylelint **/*.css > css-validation-report.txt
 
     # Convert validation reports to HTML format
       - name: Convert to HTML
