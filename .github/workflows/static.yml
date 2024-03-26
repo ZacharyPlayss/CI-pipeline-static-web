@@ -36,6 +36,7 @@ jobs:
         run: |
           touch css-validation-report.txt
           touch html-validation-report.txt
+          touch js-validation-report.txt
           npm install -g html-validate
           npm install -g stylelint stylelint-config-recommended
           npm install -g  eslint eslint-config-recommended
@@ -66,7 +67,7 @@ jobs:
         run: |
           pandoc -f markdown -t html html-validation-report.txt -o html-validation-report.html
           pandoc -f markdown -t html css-validation-report.txt -o css-validation-report.html
-          pandoc -f markdown -t js-validation-report.txt -o js-validation-report.html
+          pandoc -f markdown -t html js-validation-report.txt -o js-validation-report.html
      # Create artifacts containing files of issues
       - name: Create artifacts
         if: always()  # Ensure the step always runs
