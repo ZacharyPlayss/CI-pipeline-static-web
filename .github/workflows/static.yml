@@ -38,6 +38,7 @@ jobs:
           touch html-validation-report.txt
           npm install -g html-validate
           npm install -g stylelint stylelint-config-recommended
+          npm install -g  eslint eslint-config-recommended
           sudo apt-get update && sudo apt-get install -y pandoc
       # Validate HTML
       - name: Validate HTML
@@ -52,6 +53,12 @@ jobs:
         run: |
           echo '{ "extends": "stylelint-config-recommended" }' > .stylelintrc.json
           stylelint **/*.css > css-validation-report.txt
+      #Validate Javascript
+      - name: Validate Javascript
+        run: |
+          echo "module.exports={env:{browser:!0,es2021:!0},extends:['eslint:recommended'],parserOptions:{ecmaVersion:12,sourceType:'module'},rules:{'no-unused-vars':'warn'}};">.eslintrc.js
+          echo ".eslintrc.js">.eslintignore
+          eslint **/*.js > js-validation-report.txt
 
     # Convert validation reports to HTML format
       - name: Convert to HTML
@@ -59,6 +66,7 @@ jobs:
         run: |
           pandoc -f markdown -t html html-validation-report.txt -o html-validation-report.html
           pandoc -f markdown -t html css-validation-report.txt -o css-validation-report.html
+          pandoc -f markdown -t js-validation-report.txt -o js-validation-report.html
      # Create artifacts containing files of issues
       - name: Create artifacts
         if: always()  # Ensure the step always runs
@@ -68,6 +76,7 @@ jobs:
           path: |
             html-validation-report.html
             css-validation-report.html
+            js-validation-report.html
   deploy:
     environment:
       name: github-pages
